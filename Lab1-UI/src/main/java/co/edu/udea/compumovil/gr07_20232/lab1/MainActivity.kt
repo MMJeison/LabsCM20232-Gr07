@@ -1,0 +1,91 @@
+package co.edu.udea.compumovil.gr07_20232.lab1
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.theme.LabsCM20232Gr07Theme
+
+@ExperimentalComposeUiApi
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            LabsCM20232Gr07Theme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    color = MaterialTheme.colorScheme.primary
+                ) {
+                    Main()
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@ExperimentalComposeUiApi
+@Composable
+fun Main() {
+    // Para probar las dos vistas commenta una y dejar la otra descomentada
+    // Si se dejan las dos descomentadas se interponen :(
+    PersonalDataActivity() // Vista 1
+    // ContactDataActivity() // Vista 2
+    /*ConstraintLayout {
+        val (
+            titleRef,
+            nameRef,
+            lastNameRef,
+            sexRef,
+            dateOfBirdRef,
+            schoolGradeRef,
+            title,
+            telephone,
+            address,
+            email,
+            countries,
+            cities) = createRefs()
+
+        PersonalDataActivity(
+            titleRef = titleRef,
+            nameRef = nameRef,
+            lastNameRef = lastNameRef,
+            sexRef = sexRef,
+            dateOfBirdRef = dateOfBirdRef,
+            schoolGradeRef = schoolGradeRef
+        )
+        ContactDataActivity(
+            title = title,
+            telephone = telephone,
+            address = address,
+            email = email,
+            countries = countries,
+            cities = cities
+        )
+    }*/
+}
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@ExperimentalComposeUiApi
+@Composable
+fun GreetingPreview() {
+    Main()
+}
