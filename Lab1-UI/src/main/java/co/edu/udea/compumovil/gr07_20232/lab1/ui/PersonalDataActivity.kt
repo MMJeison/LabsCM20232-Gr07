@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr07_20232.lab1
+package co.edu.udea.compumovil.gr07_20232.lab1.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CDateRangePicker
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CDropDownMenu
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CRadioButton
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CTextField
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CTitle
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CDateRangePicker
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CDropDownMenu
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CRadioButton
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTextField
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTitle
 
 
 @OptIn(ExperimentalMaterial3Api::class)

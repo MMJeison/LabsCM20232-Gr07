@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr07_20232.lab1
+package co.edu.udea.compumovil.gr07_20232.lab1.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,9 +15,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CAutoComplete
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CTextField
-import co.edu.udea.compumovil.gr07_20232.lab1.components.CTitle
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CAutoComplete
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTextField
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,7 +95,11 @@ fun ContactDataActivity() {
             modifier = Modifier.constrainAs(address){
                 top.linkTo(telephone.bottom, margin = 16.dp)
             },
-            icon = Icons.Default.ArrowForward
+            icon = Icons.Default.ArrowForward,
+            onKeyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                autoCorrect = false
+            )
         )
         val emailInput = remember { mutableStateOf(TextFieldValue()) }
         CTextField(
@@ -104,7 +108,10 @@ fun ContactDataActivity() {
             modifier = Modifier.constrainAs(email){
                 top.linkTo(address.bottom, margin = 16.dp)
             },
-            icon = Icons.Default.Email
+            icon = Icons.Default.Email,
+            onKeyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email
+            )
         )
 
         CAutoComplete(

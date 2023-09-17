@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr07_20232.lab1.components
+package co.edu.udea.compumovil.gr07_20232.lab1.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border

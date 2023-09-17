@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr07_20232.lab1.components
+package co.edu.udea.compumovil.gr07_20232.lab1.ui.components
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker

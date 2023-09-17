@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr07_20232.lab1.components
+package co.edu.udea.compumovil.gr07_20232.lab1.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -36,7 +36,8 @@ fun CTextField(
             value = value.value,
             onValueChange = { value.value = it },
             placeholder = { Text(text = placeholderText) },
-            keyboardOptions = onKeyboardOptions
+            keyboardOptions = onKeyboardOptions,
+            singleLine = true
         )
     }
 }
