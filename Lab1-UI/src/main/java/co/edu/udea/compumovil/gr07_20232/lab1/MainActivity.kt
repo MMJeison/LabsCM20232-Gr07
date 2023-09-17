@@ -15,6 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.PersonalDataActivity
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.theme.LabsCM20232Gr07Theme
 
+enum class ScreenData(){
+    PersonalData,
+    ContactData
+}
+
 @ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
