@@ -17,11 +17,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import co.edu.udea.compumovil.gr07_20232.lab1.R
 import java.util.Calendar
 import java.util.Date
 
 @Composable
 fun CDateRangePicker(
+    label: String,
     modifier: Modifier = Modifier,
     value: MutableState<String>
 ) {
@@ -52,7 +55,7 @@ fun CDateRangePicker(
             modifier = Modifier.fillMaxWidth()
         ){
             CIcon(icon = Icons.Default.DateRange);
-            CText(text = "Fecha de cumpleaños");
+            CText(text = label);
         }
         Row (
             modifier = Modifier.fillMaxWidth(),
@@ -71,7 +74,7 @@ fun CDateRangePicker(
             }, colors = ButtonDefaults.buttonColors(
                 MaterialTheme.colorScheme.secondary
             ) ) {
-                CText(text = "Seleccionar fecha")
+                CText(text = stringResource(R.string.select_date_text))
             }
         }
     }

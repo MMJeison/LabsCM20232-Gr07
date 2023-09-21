@@ -12,9 +12,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import co.edu.udea.compumovil.gr07_20232.lab1.R
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CDateRangePicker
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CDropDownMenu
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CRadioButton
@@ -33,21 +35,30 @@ fun PersonalDataActivity() {
         val lastName = remember { mutableStateOf(TextFieldValue()) }
         val sex = remember { mutableIntStateOf(-1) }
         val dateOfBird = remember { mutableStateOf("") }
-        val schoolGrade = remember { mutableStateOf("Seleccione su grado de escolaridad")  }
-        val schoolGradeOptios = listOf("Primaria", "Bachiller", "Tecnico", "Tecnólogo", "Profesional")
-        val sexOptions = listOf("Hombre", "Mujer")
+        val schoolGradePlaceholder = stringResource(R.string.select_scholar_grade_text)
+        val schoolGrade = remember { mutableStateOf(schoolGradePlaceholder)  }
+        val schoolGradeOptios = listOf(
+            stringResource(R.string.primary_school_text),
+            stringResource(R.string.high_school_text),
+            stringResource(R.string.vocational_text),
+            stringResource(R.string.undergraduate_text)
+        )
+        val sexOptions = listOf(
+            stringResource(R.string.male_text),
+            stringResource(R.string.female_text)
+        )
 
 
         val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef ) = createRefs()
         CTitle(
-            title = "Información personal",
+            title = stringResource(R.string.personal_data_title),
             modifier = Modifier.constrainAs(titleRef) {
                 top.linkTo(parent.top, margin = 16.dp)
             }
         )
         CTextField(
             value = name,
-            placeholderText = "Nombre",
+            placeholderText = stringResource(R.string.name_label),
             icon = Icons.Default.Person,
             modifier = Modifier.constrainAs(nameRef) {
                 top.linkTo(titleRef.bottom, margin = 16.dp)
@@ -55,14 +66,14 @@ fun PersonalDataActivity() {
         )
         CTextField(
             value = lastName,
-            placeholderText = "Apellido",
+            placeholderText = stringResource(R.string.surname_label),
             icon = Icons.Default.AccountCircle,
             modifier = Modifier.constrainAs(lastNameRef) {
                 top.linkTo(nameRef.bottom, margin = 16.dp)
             }
         )
         CRadioButton(
-            text = "Sexo",
+            text = stringResource(R.string.sex_label),
             selectedOption = sex,
             options = sexOptions,
             modifier = Modifier.constrainAs(sexRef) {
@@ -71,6 +82,7 @@ fun PersonalDataActivity() {
             icon = Icons.Default.Face
         )
         CDateRangePicker(
+            label = stringResource(R.string.birth_date_label),
             value = dateOfBird,
             modifier = Modifier.constrainAs(dateOfBirdRef) {
                 top.linkTo(sexRef.bottom, margin = 16.dp)
@@ -79,7 +91,7 @@ fun PersonalDataActivity() {
         CDropDownMenu(
             selectedValue = schoolGrade,
             options = schoolGradeOptios,
-            label = "Grado de escolaridad",
+            label = stringResource(R.string.scholar_grade_label),
             modifier = Modifier.constrainAs(schoolGradeRef) {
                 top.linkTo(dateOfBirdRef.bottom, margin = 16.dp)
             }

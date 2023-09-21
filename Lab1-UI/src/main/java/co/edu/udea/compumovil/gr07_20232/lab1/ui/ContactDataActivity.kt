@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import co.edu.udea.compumovil.gr07_20232.lab1.R
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CAutoComplete
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTextField
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTitle
@@ -71,14 +73,14 @@ fun ContactDataActivity() {
         val (title, telephone, address, email, countries, cities) = createRefs()
 
         CTitle(
-            title = "Información del contacto",
+            title = stringResource(R.string.contact_data_title),
             modifier = Modifier.constrainAs(title){
                 top.linkTo(parent.top, margin = 16.dp)
             }
         )
         val phoneNumber = remember { mutableStateOf(TextFieldValue()) }
         CTextField(
-            placeholderText = "Teléfono",
+            placeholderText = stringResource(R.string.phone_number_label),
             modifier = Modifier.constrainAs(telephone){
                 top.linkTo(title.bottom, margin = 18.dp)
             },
@@ -91,7 +93,7 @@ fun ContactDataActivity() {
         val addressInput = remember { mutableStateOf(TextFieldValue()) }
         CTextField(
             value = addressInput,
-            placeholderText = "Dirección",
+            placeholderText = stringResource(R.string.address_label),
             modifier = Modifier.constrainAs(address){
                 top.linkTo(telephone.bottom, margin = 16.dp)
             },
@@ -104,7 +106,7 @@ fun ContactDataActivity() {
         val emailInput = remember { mutableStateOf(TextFieldValue()) }
         CTextField(
             value = emailInput,
-            placeholderText = "Email",
+            placeholderText = stringResource(R.string.email_label),
             modifier = Modifier.constrainAs(email){
                 top.linkTo(address.bottom, margin = 16.dp)
             },
@@ -115,7 +117,7 @@ fun ContactDataActivity() {
         )
 
         CAutoComplete(
-            title = "País",
+            title = stringResource(R.string.country_label),
             itemList = countriesList,
             modifier = Modifier.constrainAs(countries){
                 top.linkTo(email.bottom, margin = 12.dp)
@@ -123,7 +125,7 @@ fun ContactDataActivity() {
         )
 
         CAutoComplete(
-            title = "Ciudad",
+            title = stringResource(R.string.city_label),
             itemList = citiesList,
             modifier = Modifier.constrainAs(cities){
                 top.linkTo(countries.bottom, margin = 8.dp)
