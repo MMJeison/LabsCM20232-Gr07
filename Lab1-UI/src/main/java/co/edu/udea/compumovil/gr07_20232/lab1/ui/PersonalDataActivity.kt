@@ -14,9 +14,12 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import co.edu.udea.compumovil.gr07_20232.lab1.R
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CButton
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CDateRangePicker
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CDropDownMenu
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CRadioButton
@@ -27,7 +30,7 @@ import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTitle
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalComposeUiApi
 @Composable
-fun PersonalDataActivity() {
+fun PersonalDataActivity(navController: NavHostController) {
     ConstraintLayout (
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
@@ -49,7 +52,7 @@ fun PersonalDataActivity() {
         )
 
 
-        val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef ) = createRefs()
+        val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef, nextButton ) = createRefs()
         CTitle(
             title = stringResource(R.string.personal_data_title),
             modifier = Modifier.constrainAs(titleRef) {
@@ -96,5 +99,21 @@ fun PersonalDataActivity() {
                 top.linkTo(dateOfBirdRef.bottom, margin = 16.dp)
             }
         )
+        CButton(
+            label = stringResource(R.string.next_text),
+            modifier = Modifier.constrainAs(nextButton){
+                top.linkTo(schoolGradeRef.bottom, margin = 8.dp)
+            },
+            onClick = {
+                navController.navigate("ContactData")
+            }
+        )
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PersonalDataPreview() {
+    //PersonalDataActivity(navController)
 }

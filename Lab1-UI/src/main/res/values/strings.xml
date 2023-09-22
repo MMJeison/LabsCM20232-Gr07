@@ -21,4 +21,7 @@
     <string name="select_scholar_grade_text">Seleccione su grado de escolaridad</string>
     <string name="male_text">Hombre</string>
     <string name="female_text">Mujer</string>
+    <string name="next_text">Siguiente</string>
+    <string name="finish_text">Terminar</string>
+    <string name="back_text">Volver</string>
 </resources>
