@@ -14,6 +14,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.ContactDataActivity
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.PersonalDataActivity
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.rememberImeState
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.theme.LabsCM20232Gr07Theme
@@ -29,12 +33,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LabsCM20232Gr07Theme {
+                /*val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "PersonalData"){
+                    composable("PersonalData"){
+                        PersonalDataActivity(navController)
+                    }
+                    composable("ContactData"){
+                        ContactDataActivity(navController)
+                    }
+                }*/
+
                 val imeState = rememberImeState()
                 val scrollState = rememberScrollState()
                 
                 LaunchedEffect(key1 = imeState.value){
                     if(imeState.value){
-                        scrollState.animateScrollTo(scrollState.maxValue, tween(300))
+                        scrollState.animateScrollTo(scrollState.value + 100, tween(300))
                     }
                 }
                 
@@ -43,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState),
-                    color = MaterialTheme.colorScheme.primary
+                    //color = MaterialTheme.colorScheme.primary
                 ) {
                     Main()
                 }
@@ -52,13 +66,22 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @ExperimentalComposeUiApi
 @Composable
 fun Main() {
+
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "PersonalData"){
+        composable("PersonalData"){
+            PersonalDataActivity(navController)
+        }
+        composable("ContactData"){
+            ContactDataActivity(navController)
+        }
+    }
     // Para probar las dos vistas commenta una y dejar la otra descomentada
     // Si se dejan las dos descomentadas se interponen :(
-    PersonalDataActivity() // Vista 1
+    //PersonalDataActivity(navController) // Vista 1
     // ContactDataActivity() // Vista 2
     /*ConstraintLayout {
         val (

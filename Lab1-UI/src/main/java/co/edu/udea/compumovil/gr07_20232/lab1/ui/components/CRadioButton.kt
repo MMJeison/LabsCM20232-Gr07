@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ fun CRadioButton(
     text: String,
     selectedOption: MutableState<Int>,
     options: List<String>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.widthIn(100.dp),
     icon: ImageVector
 ) {
     val radioOptions = remember(options) { mutableStateListOf(*options.toTypedArray()) }

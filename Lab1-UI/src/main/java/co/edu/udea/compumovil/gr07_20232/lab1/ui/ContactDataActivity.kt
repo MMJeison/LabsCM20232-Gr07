@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.gr07_20232.lab1.ui
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -10,20 +11,24 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import co.edu.udea.compumovil.gr07_20232.lab1.R
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CAutoComplete
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CButton
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTextField
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactDataActivity() {
+fun ContactDataActivity(navController: NavHostController) {
     ConstraintLayout (
         modifier = Modifier.padding(horizontal = 18.dp)
     ) {
@@ -70,7 +75,7 @@ fun ContactDataActivity() {
             "Montería",
             "Valledupar"
         )
-        val (title, telephone, address, email, countries, cities) = createRefs()
+        val (title, telephone, address, email, countries, cities, buttonsRow, backButton, finishButton) = createRefs()
 
         CTitle(
             title = stringResource(R.string.contact_data_title),
@@ -131,5 +136,37 @@ fun ContactDataActivity() {
                 top.linkTo(countries.bottom, margin = 8.dp)
             }
         )
+
+        /*Row(
+            modifier = Modifier.constrainAs(buttonsRow){
+                top.linkTo(cities.bottom, margin = 8.dp)
+            }
+        ) {*/
+            CButton(
+                label = stringResource(R.string.back_text),
+                modifier = Modifier.constrainAs(backButton){
+                    top.linkTo(cities.bottom, margin = 8.dp)
+                },
+                onClick = {
+                    navController.navigate("PersonalData")
+                }
+            )
+
+            CButton(
+                label = stringResource(R.string.finish_text),
+                modifier = Modifier.constrainAs(finishButton){
+                    absoluteLeft.linkTo(backButton.absoluteRight, margin = 8.dp)
+                },
+                onClick = { }
+            )
+        //}
+
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ContactDataPreview() {
+    //ContactDataActivity(navController)
 }

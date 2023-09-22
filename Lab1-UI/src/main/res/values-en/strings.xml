@@ -22,4 +22,7 @@
     <string name="select_scholar_grade_text">Select your scholar grade</string>
     <string name="male_text">Male</string>
     <string name="female_text">Female</string>
+    <string name="next_text">Next</string>
+    <string name="finish_text">Finish</string>
+    <string name="back_text">Back</string>
 </resources>
