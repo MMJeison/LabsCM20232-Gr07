@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState),
-                    //color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     Main()
                 }
