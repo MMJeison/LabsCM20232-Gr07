@@ -67,7 +67,8 @@ fun CTextField2(
                 tint = Color.Black
             )
         },
-        keyboardOptions = keyboardOptions
+        keyboardOptions = keyboardOptions,
+
     )
 
     if(emailType == 1){

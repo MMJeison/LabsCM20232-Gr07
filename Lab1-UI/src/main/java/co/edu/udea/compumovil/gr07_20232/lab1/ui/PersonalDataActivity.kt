@@ -2,6 +2,7 @@ package co.edu.udea.compumovil.gr07_20232.lab1.ui
 
 import android.content.Context
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -82,12 +83,14 @@ fun PersonalDataScreen(
     }
 }
 
-var name = mutableStateOf(TextFieldValue(""))
-var lastName = mutableStateOf(TextFieldValue(""))
-var sex = mutableIntStateOf(-1)
-var dateOfBird  =  mutableStateOf("")
+val name = mutableStateOf(TextFieldValue(""))
+val lastName = mutableStateOf(TextFieldValue(""))
+val sex = mutableIntStateOf(-1)
+val dateOfBird  =  mutableStateOf("")
 //var schoolGradePlaceholder = stringResource(R.string.select_scholar_grade_text)
-var schoolGrade = mutableStateOf("")
+val schoolGrade = mutableStateOf("")
+
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,6 +104,7 @@ fun PersonalDataActivity(
     ConstraintLayout (
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
+        val context = LocalContext.current
         val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef, nextButton ) = createRefs()
         CTitle(
             title = stringResource(R.string.personal_data_title),
@@ -158,7 +162,9 @@ fun PersonalDataActivity(
                 top.linkTo(schoolGradeRef.bottom, margin = 8.dp)
             },
             onClick = {
-                navController.navigate("ContactData")
+                if(areFieldsValid(context)) {
+                    navController.navigate("ContactData")
+                }
             }
         )
     }
@@ -177,6 +183,7 @@ fun PersonalDataActivityLandscape(
             .padding(10.dp)
             .verticalScroll(rememberScrollState()),
     ) {
+        val context = LocalContext.current
         val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef, nextButton ) = createRefs()
         CTitle(
             title = stringResource(R.string.personal_data_title),
@@ -236,11 +243,38 @@ fun PersonalDataActivityLandscape(
                 absoluteRight.linkTo(parent.absoluteRight, margin = 16.dp)
             },
             onClick = {
-                navController.navigate("ContactData")
+                if (areFieldsValid(context = context)) {
+                    navController.navigate("ContactData")
+                }
             }
         )
     }
 }
+
+fun areFieldsValid(context: Context):Boolean {
+    if(name.value.text.isBlank()) {
+        Toast.makeText(context, "El nombre no puede estar vacío", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    if(lastName.value.text.isBlank()) {
+        Toast.makeText(context, "El apellido no puede estar vacío", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    if(sex.value == -1) {
+        Toast.makeText(context, "Debe seleccionar su sexo", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    if(dateOfBird.value.isBlank()) {
+        Toast.makeText(context, "Debe seleccionar una fecha de nacimiento", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    if(schoolGrade.value.isBlank()) {
+        Toast.makeText(context, "Debe seleccionar un grado de escolarida", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    return true
+}
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, showSystemUi = true)

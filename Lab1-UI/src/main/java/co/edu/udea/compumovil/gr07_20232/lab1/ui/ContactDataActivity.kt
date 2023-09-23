@@ -1,6 +1,8 @@
 package co.edu.udea.compumovil.gr07_20232.lab1.ui
 
+import android.content.Context
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -116,7 +119,7 @@ fun ContactDataActivity(
     ConstraintLayout (
         modifier = Modifier.padding(horizontal = 18.dp)
     ) {
-
+        val context = LocalContext.current
         val (title, telephone, address, email, countries, cities, backButton, finishButton) = createRefs()
 
         CTitle(
@@ -199,7 +202,9 @@ fun ContactDataActivity(
                 top.linkTo(cities.bottom, margin = 8.dp)
                 absoluteLeft.linkTo(backButton.absoluteRight, margin = 8.dp)
             },
-            onClick = { }
+            onClick = {
+                areFieldsValids(context)
+            }
         )
     }
 }
@@ -213,7 +218,7 @@ fun ContactDataActivityLandscape(
     ConstraintLayout (
         modifier = Modifier.padding(horizontal = 18.dp)
     ) {
-
+        val context = LocalContext.current
         val (title, telephone, address, email, countries, cities, backButton, finishButton) = createRefs()
 
         CTitle(
@@ -299,9 +304,29 @@ fun ContactDataActivityLandscape(
                 top.linkTo(cities.bottom, margin = 8.dp)
                 absoluteLeft.linkTo(backButton.absoluteRight, margin = 8.dp)
             },
-            onClick = { }
+            onClick = {
+                areFieldsValids(context)
+            }
         )
     }
+}
+
+val phoneNumberRegex = """^\+(?:[0-9] ?){6,14}[0-9]$""".toRegex()
+val emailRegex = """^[A-Za-z0-9+_.-]+@(.+)$""".toRegex()
+fun areFieldsValids(context: Context):Boolean {
+    if(phoneNumber.value.text.matches(phoneNumberRegex)) {
+        Toast.makeText(context, "Debe ingresar un numero de telefono valido", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    if(addressInput.value.text.matches(emailRegex)) {
+        Toast.makeText(context, "Debe ingresar una direccion", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    if(emailInput.value.text.isBlank()) {
+        Toast.makeText(context, "El apellido no puede estar vacío", Toast.LENGTH_SHORT).show()
+        return false
+    }
+    return true
 }
 
 @OptIn(ExperimentalComposeUiApi::class)

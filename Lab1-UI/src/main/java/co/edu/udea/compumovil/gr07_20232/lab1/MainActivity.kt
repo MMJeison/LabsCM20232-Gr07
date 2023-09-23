@@ -17,9 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import co.edu.udea.compumovil.gr07_20232.lab1.ui.ContactDataActivity
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.ContactDataScreen
-import co.edu.udea.compumovil.gr07_20232.lab1.ui.PersonalDataActivity
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.PersonalDataScreen
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.rememberImeState
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.theme.LabsCM20232Gr07Theme
@@ -45,20 +43,24 @@ class MainActivity : ComponentActivity() {
                     }
                 }*/
 
+
+
                 val imeState = rememberImeState()
                 val scrollState = rememberScrollState()
-                
+
                 LaunchedEffect(key1 = imeState.value){
                     if(imeState.value){
-                        scrollState.animateScrollTo(scrollState.value + 100, tween(300))
+                        scrollState.animateScrollTo(scrollState.value + 250, tween(300))
                     }
                 }
-                
+
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(scrollState),
+                        .verticalScroll(scrollState)
+                    ,
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Main()
@@ -71,7 +73,6 @@ class MainActivity : ComponentActivity() {
 @ExperimentalComposeUiApi
 @Composable
 fun Main() {
-
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "PersonalData"){
         composable("PersonalData"){
