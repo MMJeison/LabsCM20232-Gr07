@@ -44,39 +44,57 @@ import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.CTitle
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun PersonalDataScreen(){
+fun PersonalDataScreen(
+    navController: NavHostController
+){
     //val context = LocalContext.current
     val configuration = LocalConfiguration.current
+
+    val schoolGradeOptions = listOf(
+        stringResource(R.string.primary_school_text),
+        stringResource(R.string.high_school_text),
+        stringResource(R.string.vocational_text),
+        stringResource(R.string.undergraduate_text)
+    )
+    val sexOptions = listOf(
+        stringResource(R.string.male_text),
+        stringResource(R.string.female_text)
+    )
+
     when (configuration.orientation) {
         Configuration.ORIENTATION_PORTRAIT -> {
-            PersonalDataActivity()
+            PersonalDataActivity(
+                navController = navController,
+                schoolGradeOptions = schoolGradeOptions,
+                sexOptions = sexOptions
+            )
         }
         else -> {
-            PersonalDataActivityLandscape()
+            PersonalDataActivityLandscape(
+                navController = navController,
+                schoolGradeOptions = schoolGradeOptions,
+                sexOptions = sexOptions
+            )
         }
     }
 }
-var name by  mutableStateOf("")
-var lastName by mutableStateOf("")
-var sex  by mutableIntStateOf(-1)
-var dateOfBird  by  mutableStateOf("")
-//var schoolGradePlaceholder = stringResource(R.string.select_scholar_grade_text)
-var schoolGrade by mutableStateOf("")
-val schoolGradeOptios = listOf(
-    stringResource(R.string.primary_school_text),
-    stringResource(R.string.high_school_text),
-    stringResource(R.string.vocational_text),
-    stringResource(R.string.undergraduate_text)
-)
 
-val sexOptions = listOf(
-    stringResource(R.string.male_text),
-    stringResource(R.string.female_text)
-)
+var name = mutableStateOf(TextFieldValue(""))
+var lastName = mutableStateOf(TextFieldValue(""))
+var sex = mutableIntStateOf(-1)
+var dateOfBird  =  mutableStateOf("")
+//var schoolGradePlaceholder = stringResource(R.string.select_scholar_grade_text)
+var schoolGrade = mutableStateOf("")
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalComposeUiApi
 @Composable
-fun PersonalDataActivity(navController: NavHostController) {
+fun PersonalDataActivity(
+    navController: NavHostController,
+    schoolGradeOptions: List<String>,
+    sexOptions: List<String>
+    ) {
     ConstraintLayout (
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
@@ -121,7 +139,7 @@ fun PersonalDataActivity(navController: NavHostController) {
         )
         CDropDownMenu(
             selectedValue = schoolGrade,
-            options = schoolGradeOptios,
+            options = schoolGradeOptions,
             label = stringResource(R.string.scholar_grade_label),
             modifier = Modifier.constrainAs(schoolGradeRef) {
                 top.linkTo(dateOfBirdRef.bottom, margin = 16.dp)
@@ -139,24 +157,20 @@ fun PersonalDataActivity(navController: NavHostController) {
     }
 }
 
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Preview(showBackground = true, showSystemUi = true)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalDataPreview() {
-    //PersonalDataActivity(navController)
-}
-
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@Composable
-fun PersonalDataActivityLandscape() {
+fun PersonalDataActivityLandscape(
+    navController: NavHostController,
+    schoolGradeOptions: List<String>,
+    sexOptions: List<String>
+) {
     ConstraintLayout (
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
             .verticalScroll(rememberScrollState()),
     ) {
-        val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef ) = createRefs()
+        val (titleRef, nameRef, lastNameRef, sexRef, dateOfBirdRef, schoolGradeRef, nextButton ) = createRefs()
         CTitle(
             title = stringResource(R.string.personal_data_title),
             modifier = Modifier.constrainAs(titleRef) {
@@ -176,7 +190,7 @@ fun PersonalDataActivityLandscape() {
             placeholderText = stringResource(R.string.surname_label),
             icon = Icons.Default.AccountCircle,
             modifier = Modifier.constrainAs(lastNameRef) {
-                top.linkTo(nameRef.bottom, margin = 16.dp)
+                absoluteLeft.linkTo(nameRef.absoluteRight, margin = 16.dp)
             }
         )
         CRadioButton(
@@ -184,7 +198,7 @@ fun PersonalDataActivityLandscape() {
             selectedOption = sex,
             options = sexOptions,
             modifier = Modifier.constrainAs(sexRef) {
-                top.linkTo(lastNameRef.bottom, margin = 16.dp)
+                top.linkTo(nameRef.bottom, margin = 16.dp)
             },
             icon = Icons.Default.Face
         )
@@ -197,12 +211,28 @@ fun PersonalDataActivityLandscape() {
         )
         CDropDownMenu(
             selectedValue = schoolGrade,
-            options = schoolGradeOptios,
+            options = schoolGradeOptions,
             label = stringResource(R.string.scholar_grade_label),
             modifier = Modifier.constrainAs(schoolGradeRef) {
-                top.linkTo(dateOfBirdRef.bottom, margin = 16.dp)
+                absoluteLeft.linkTo(dateOfBirdRef.absoluteRight, margin = 16.dp)
             }
         )
-
+        CButton(
+            label = stringResource(R.string.next_text),
+            modifier = Modifier.constrainAs(nextButton){
+                top.linkTo(schoolGradeRef.bottom, margin = 8.dp)
+                absoluteRight.linkTo(parent.absoluteRight, margin = 16.dp)
+            },
+            onClick = {
+                navController.navigate("ContactData")
+            }
+        )
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PersonalDataPreview() {
+    //PersonalDataActivity(navController)
 }

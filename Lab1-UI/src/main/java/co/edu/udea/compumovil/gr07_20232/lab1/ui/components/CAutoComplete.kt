@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.gr07_20232.lab1.ui.components
 
+import android.R
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,11 +25,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
@@ -37,6 +41,7 @@ import androidx.compose.ui.unit.toSize
 fun CAutoComplete(
     title: String,
     itemList: List<String>,
+    //icon: ImageVector,
     modifier: Modifier = Modifier
 ) {
 
@@ -70,7 +75,8 @@ fun CAutoComplete(
                 onClick = {
                     expanded = false
                 }
-            ).then(modifier)
+            )
+            .then(modifier)
     ) {
 
         Text(
@@ -84,8 +90,12 @@ fun CAutoComplete(
         Column(modifier = Modifier.fillMaxWidth()) {
 
             Row(modifier = Modifier.fillMaxWidth()) {
+                /*CIcon(
+                    icon = icon,
+                )*/
                 TextField(
                     modifier = Modifier
+                        //.widthIn((R.attr.maxWidth * 0.8).dp)
                         .fillMaxWidth()
                         .height(heightTextFields)
                         .border(
@@ -196,4 +206,16 @@ fun CategoryItems(
         Text(text = title, fontSize = 16.sp)
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AutocompletePreview() {
+    CAutoComplete(title = "Prueba",
+        itemList = listOf(
+            "Item 1",
+            "Item 2"
+        )
+        //icon = Icons.Default.LocationOn
+    )
 }

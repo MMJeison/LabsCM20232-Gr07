@@ -18,7 +18,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.ContactDataActivity
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.ContactDataScreen
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.PersonalDataActivity
+import co.edu.udea.compumovil.gr07_20232.lab1.ui.PersonalDataScreen
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.components.rememberImeState
 import co.edu.udea.compumovil.gr07_20232.lab1.ui.theme.LabsCM20232Gr07Theme
 
@@ -73,10 +75,10 @@ fun Main() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "PersonalData"){
         composable("PersonalData"){
-            PersonalDataActivity(navController)
+            PersonalDataScreen(navController)
         }
         composable("ContactData"){
-            ContactDataActivity(navController)
+            ContactDataScreen(navController)
         }
     }
     // Para probar las dos vistas commenta una y dejar la otra descomentada

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -21,17 +22,26 @@ fun CTitle(
     modifier: Modifier = Modifier
 ) {
     Row (
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .background(color = Color(76, 175, 80)),
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
             text = title,
             modifier = Modifier
                 .padding(10.dp),
-            color = Color(30, 69, 32),
+            //color = Color(30, 69, 32),
+            color = Color.Black,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
     }
+}
+
+@Preview
+@Composable
+fun TitlePreview() {
+    CTitle(title = "Prueba")
 }
