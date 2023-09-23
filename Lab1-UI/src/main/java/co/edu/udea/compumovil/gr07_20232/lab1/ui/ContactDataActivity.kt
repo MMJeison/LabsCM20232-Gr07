@@ -19,6 +19,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -133,7 +134,8 @@ fun ContactDataActivity(
             icon = Icons.Default.Call,
             value = phoneNumber,
             onKeyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Phone
+                keyboardType = KeyboardType.Phone,
+                imeAction = ImeAction.Next
             )
         )
 
@@ -145,7 +147,8 @@ fun ContactDataActivity(
             },
             icon = Icons.Default.Email,
             onKeyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
             )
         )
 
@@ -158,7 +161,8 @@ fun ContactDataActivity(
             icon = Icons.Default.ArrowForward,
             onKeyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
-                autoCorrect = false
+                autoCorrect = false,
+                imeAction = ImeAction.Next
             )
         )
 
@@ -227,7 +231,8 @@ fun ContactDataActivityLandscape(
             icon = Icons.Default.Call,
             value = phoneNumber,
             onKeyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Phone
+                keyboardType = KeyboardType.Phone,
+                imeAction = ImeAction.Next
             )
         )
 
@@ -240,7 +245,8 @@ fun ContactDataActivityLandscape(
             },
             icon = Icons.Default.Email,
             onKeyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
             )
         )
 
@@ -254,7 +260,8 @@ fun ContactDataActivityLandscape(
             icon = Icons.Default.ArrowForward,
             onKeyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
-                autoCorrect = false
+                autoCorrect = false,
+                imeAction = ImeAction.Next
             )
         )
 

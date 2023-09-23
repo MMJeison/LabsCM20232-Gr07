@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -28,6 +29,8 @@ import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -111,7 +114,11 @@ fun PersonalDataActivity(
             icon = Icons.Default.Person,
             modifier = Modifier.constrainAs(nameRef) {
                 top.linkTo(titleRef.bottom, margin = 16.dp)
-            }
+            },
+            onKeyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            )
         )
         CTextField(
             value = lastName,
@@ -190,8 +197,13 @@ fun PersonalDataActivityLandscape(
             placeholderText = stringResource(R.string.surname_label),
             icon = Icons.Default.AccountCircle,
             modifier = Modifier.constrainAs(lastNameRef) {
+                top.linkTo(titleRef.bottom, margin = 16.dp)
                 absoluteLeft.linkTo(nameRef.absoluteRight, margin = 16.dp)
-            }
+            },
+            onKeyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            )
         )
         CRadioButton(
             text = stringResource(R.string.sex_label),
