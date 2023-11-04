@@ -82,6 +82,7 @@ import co.edu.udea.compumovil.gr07_20232.lab2.data.Episode
 import co.edu.udea.compumovil.gr07_20232.lab2.data.EpisodeToPodcast
 import co.edu.udea.compumovil.gr07_20232.lab2.data.Podcast
 import co.edu.udea.compumovil.gr07_20232.lab2.data.PodcastWithExtraInfo
+import co.edu.udea.compumovil.gr07_20232.lab2.ui.Song
 import co.edu.udea.compumovil.gr07_20232.lab2.ui.home.PreviewEpisodes
 import co.edu.udea.compumovil.gr07_20232.lab2.ui.home.PreviewPodcasts
 import co.edu.udea.compumovil.gr07_20232.lab2.ui.theme.JetcasterTheme
@@ -162,16 +163,34 @@ fun EpisodeListItem(
     modifier: Modifier = Modifier,
     mplayer: MediaPlayer
 ) {
-    var isp by remember { mutableStateOf(mplayer.isPlaying) }
+    var isp by remember { mutableStateOf( if(Song.current.equals(episode.uri)) mplayer.isPlaying else false ) }
     val icon = if (isp) Icons.Rounded.PauseCircleFilled else Icons.Rounded.PlayCircleFilled
 
     fun handlePlayPause () {
-        if (mplayer.isPlaying) {
-            mplayer.pause()
-            isp = false
+        if(Song.current.equals(episode.uri)) {
+            if (mplayer.isPlaying) {
+                mplayer.pause()
+                isp = false
+            } else {
+                mplayer.start()
+                isp = true
+            }
         } else {
-            mplayer.start()
-            isp = true
+            Song.current = episode.uri
+            Song.refresh()
+            Song.refresh = fun(){
+                isp = false
+            }
+            mplayer.reset()
+            mplayer.setDataSource(Song.songUrl)
+            mplayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            mplayer.prepareAsync()
+            mplayer.setOnPreparedListener {
+                mediaPlayer -> run {
+                    mediaPlayer.start()
+                    isp = true
+                }
+            }
         }
     }
 

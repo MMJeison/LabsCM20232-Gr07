@@ -152,8 +152,8 @@ fun PlayerContent(
     mplayer: MediaPlayer
 ) {
 
-    val context = LocalContext.current
-    Toast.makeText(context, uiState.uri, Toast.LENGTH_LONG).show()
+    // val context = LocalContext.current
+    // Toast.makeText(context, uiState.uri, Toast.LENGTH_LONG).show()
 
     PlayerDynamicTheme(uiState.podcastImageUrl) {
         val foldingFeature = displayFeatures.filterIsInstance<FoldingFeature>().firstOrNull()
@@ -262,7 +262,7 @@ private fun PlayerContentRegular(
                 modifier = Modifier.weight(10f)
             ) {
                 PlayerSlider(uiState.duration)
-                PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer)
+                PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer, uiState = uiState)
             }
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -333,7 +333,8 @@ private fun PlayerContentTableTopBottom(
             PlayerButtons(
                 playerButtonSize = 92.dp,
                 modifier = Modifier.padding(top = 8.dp),
-                mplayer = mplayer
+                mplayer = mplayer,
+                uiState = uiState
             )
             PlayerSlider(uiState.duration)
         }
@@ -392,7 +393,7 @@ private fun PlayerContentBookEnd(
                 .weight(1f)
         )
         PlayerSlider(uiState.duration)
-        PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer)
+        PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer, uiState = uiState)
     }
 }
 
@@ -562,7 +563,7 @@ fun TopAppBarPreview() {
         TopAppBar(onBackPress = { })
     }
 }
-
+/*
 @Preview
 @Composable
 fun PlayerButtonsPreview() {
@@ -575,6 +576,7 @@ fun PlayerButtonsPreview() {
         PlayerButtons(mplayer = MLPlayer)
     }
 }
+*/
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Preview(device = Devices.PHONE)

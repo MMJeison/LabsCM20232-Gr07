@@ -33,23 +33,43 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import co.edu.udea.compumovil.gr07_20232.lab2.R
+import co.edu.udea.compumovil.gr07_20232.lab2.ui.Song
 
 @Composable
 private fun PlayButton(
     modifier: Modifier = Modifier,
     playerButtonSize: Dp = 72.dp,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    uiState: PlayerUiState
 ) {
-    var isp by remember { mutableStateOf(mplayer.isPlaying) }
+    var isp by remember { mutableStateOf( if(Song.current.equals(uiState.uri)) mplayer.isPlaying else false ) }
     val icon = if (isp) Icons.Rounded.PauseCircleFilled else Icons.Rounded.PlayCircleFilled
 
-    fun onClick () {
-        if (mplayer.isPlaying) {
-            mplayer.pause()
-            isp = false
+    fun handlePlayPause () {
+        if(Song.current.equals(uiState.uri)) {
+            if (mplayer.isPlaying) {
+                mplayer.pause()
+                isp = false
+            } else {
+                mplayer.start()
+                isp = true
+            }
         } else {
-            mplayer.start()
-            isp = true
+            Song.current = uiState.uri
+            Song.refresh()
+            Song.refresh = fun(){
+                isp = false
+            }
+            mplayer.reset()
+            mplayer.setDataSource(Song.songUrl)
+            mplayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            mplayer.prepareAsync()
+            mplayer.setOnPreparedListener {
+                    mediaPlayer -> run {
+                    mediaPlayer.start()
+                    isp = true
+                }
+            }
         }
     }
 
@@ -61,7 +81,7 @@ private fun PlayButton(
         modifier = modifier.size(playerButtonSize)
             .semantics { role = Role.Button }
             .then(
-                Modifier.clickable { onClick() }
+                Modifier.clickable { handlePlayPause() }
             )
     )
 }
@@ -71,7 +91,8 @@ public fun PlayerButtons(
     modifier: Modifier = Modifier,
     playerButtonSize: Dp = 72.dp,
     sideButtonSize: Dp = 48.dp,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    uiState: PlayerUiState
 ) {
 
 
@@ -98,7 +119,7 @@ public fun PlayerButtons(
             colorFilter = ColorFilter.tint(LocalContentColor.current),
             modifier = buttonsModifier
         )
-        PlayButton(mplayer = mplayer)
+        PlayButton(mplayer = mplayer, uiState = uiState)
         Image(
             imageVector = Icons.Filled.Forward30,
             contentDescription = stringResource(R.string.cd_forward30),

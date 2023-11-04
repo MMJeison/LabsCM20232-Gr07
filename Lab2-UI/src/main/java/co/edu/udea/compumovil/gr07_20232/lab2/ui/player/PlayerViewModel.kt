@@ -43,7 +43,7 @@ data class PlayerUiState(
     val author: String = "",
     val summary: String = "",
     val podcastImageUrl: String = "",
-    val uri: String = "def"
+    val uri: String = ""
 )
 
 /**
@@ -72,7 +72,7 @@ class PlayerViewModel(
                 podcastName = podcast.title,
                 summary = episode.summary ?: "",
                 podcastImageUrl = podcast.imageUrl ?: "",
-                uri = (podcast.uri?: "") + "/" + (episode.uri ?: "")
+                uri = episode.uri ?: ""
             )
         }
     }

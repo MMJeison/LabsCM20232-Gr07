@@ -18,11 +18,17 @@ package co.edu.udea.compumovil.gr07_20232.lab2.ui
 
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.widget.Toast
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -33,6 +39,17 @@ import co.edu.udea.compumovil.gr07_20232.lab2.ui.home.Home
 import co.edu.udea.compumovil.gr07_20232.lab2.ui.player.PlayerScreen
 import co.edu.udea.compumovil.gr07_20232.lab2.ui.player.PlayerViewModel
 
+
+class Song {
+    companion object {
+        var current: String = ""
+        val songUrl: String = "https://nyt.simplecastaudio.com/bbbcc290-ed3b-44a2-8e5d-5513e38cfe20/episodes/e7db6450-5024-40a4-b537-63fdd37b5915/audio/128/default.mp3/default.mp3_ywr3ahjkcgo_7c00e8f18999a315bf15cce31056ba17_55462015.mp3?awCollectionId=bbbcc290-ed3b-44a2-8e5d-5513e38cfe20&amp;awEpisodeId=e7db6450-5024-40a4-b537-63fdd37b5915&hash_redirect=1&x-total-bytes=55462015&x-ais-classified=streaming&listeningSessionID=0CD_382_307__3848c19da800b0280958142d9e5d73586c76b570"
+        var refresh: () -> Unit = {}
+    }
+
+    private constructor()
+}
+
 @Composable
 fun JetcasterApp(
     windowSizeClass: WindowSizeClass,
@@ -40,10 +57,7 @@ fun JetcasterApp(
     appState: JetcasterAppState = rememberJetcasterAppState()
 ) {
     val MLPlayer = MediaPlayer()
-    val url = "https://nyt.simplecastaudio.com/bbbcc290-ed3b-44a2-8e5d-5513e38cfe20/episodes/e7db6450-5024-40a4-b537-63fdd37b5915/audio/128/default.mp3/default.mp3_ywr3ahjkcgo_7c00e8f18999a315bf15cce31056ba17_55462015.mp3?awCollectionId=bbbcc290-ed3b-44a2-8e5d-5513e38cfe20&amp;awEpisodeId=e7db6450-5024-40a4-b537-63fdd37b5915&hash_redirect=1&x-total-bytes=55462015&x-ais-classified=streaming&listeningSessionID=0CD_382_307__3848c19da800b0280958142d9e5d73586c76b570"
-    MLPlayer.setDataSource(url)
-    MLPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-    MLPlayer.prepareAsync()
+
     if (appState.isOnline) {
         NavHost(
             navController = appState.navController,
