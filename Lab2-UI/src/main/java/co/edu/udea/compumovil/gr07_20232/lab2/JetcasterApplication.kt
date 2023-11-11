@@ -17,6 +17,10 @@
 package co.edu.udea.compumovil.gr07_20232.lab2
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 
@@ -27,6 +31,15 @@ class JetcasterApplication : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         Graph.provide(this)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(
+                "running_channel",
+                "Running notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     override fun newImageLoader(): ImageLoader {

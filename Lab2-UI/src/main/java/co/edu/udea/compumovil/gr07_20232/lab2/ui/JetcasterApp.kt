@@ -54,7 +54,8 @@ class Song {
 fun JetcasterApp(
     windowSizeClass: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
-    appState: JetcasterAppState = rememberJetcasterAppState()
+    appState: JetcasterAppState = rememberJetcasterAppState(),
+    onPlayPauseClick: () -> Unit
 ) {
     val MLPlayer = MediaPlayer()
 
@@ -83,7 +84,8 @@ fun JetcasterApp(
                     windowSizeClass,
                     displayFeatures,
                     onBackPress = appState::navigateBack,
-                    mplayer = MLPlayer
+                    mplayer = MLPlayer,
+                    onPlayPauseClick = onPlayPauseClick
                 )
             }
         }

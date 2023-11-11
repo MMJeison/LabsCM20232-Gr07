@@ -114,10 +114,11 @@ fun PlayerScreen(
     windowSizeClass: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
     onBackPress: () -> Unit,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    onPlayPauseClick: () -> Unit
 ) {
     val uiState = viewModel.uiState
-    PlayerScreen(uiState, windowSizeClass, displayFeatures, onBackPress, mplayer = mplayer)
+    PlayerScreen(uiState, windowSizeClass, displayFeatures, onBackPress, mplayer = mplayer, onPlayPauseClick = onPlayPauseClick)
 }
 
 /**
@@ -130,12 +131,13 @@ private fun PlayerScreen(
     displayFeatures: List<DisplayFeature>,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    onPlayPauseClick: () -> Unit
 ) {
 
     Surface(modifier) {
         if (uiState.podcastName.isNotEmpty()) {
-            PlayerContent(uiState, windowSizeClass, displayFeatures, onBackPress, mplayer = mplayer)
+            PlayerContent(uiState, windowSizeClass, displayFeatures, onBackPress, mplayer = mplayer, onPlayPauseClick = onPlayPauseClick)
         } else {
             FullScreenLoading()
         }
@@ -149,7 +151,8 @@ fun PlayerContent(
     displayFeatures: List<DisplayFeature>,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    onPlayPauseClick: () -> Unit
 ) {
 
     // val context = LocalContext.current
@@ -185,7 +188,8 @@ fun PlayerContent(
                         PlayerContentTableTopBottom(
                             uiState = uiState,
                             onBackPress = onBackPress,
-                            mplayer = mplayer
+                            mplayer = mplayer,
+                            onPlayPauseClick = onPlayPauseClick
                         )
                     },
                     strategy = VerticalTwoPaneStrategy(splitFraction = 0.5f),
@@ -210,7 +214,7 @@ fun PlayerContent(
                             PlayerContentBookStart(uiState = uiState)
                         },
                         second = {
-                            PlayerContentBookEnd(uiState = uiState, mplayer = mplayer)
+                            PlayerContentBookEnd(uiState = uiState, mplayer = mplayer, onPlayPauseClick = onPlayPauseClick)
                         },
                         strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f),
                         displayFeatures = displayFeatures
@@ -218,7 +222,7 @@ fun PlayerContent(
                 }
             }
         } else {
-            PlayerContentRegular(uiState, onBackPress, modifier, mplayer = mplayer)
+            PlayerContentRegular(uiState, onBackPress, modifier, mplayer = mplayer, onPlayPauseClick = onPlayPauseClick)
         }
     }
 }
@@ -231,7 +235,8 @@ private fun PlayerContentRegular(
     uiState: PlayerUiState,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    onPlayPauseClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -262,7 +267,7 @@ private fun PlayerContentRegular(
                 modifier = Modifier.weight(10f)
             ) {
                 PlayerSlider(uiState.duration)
-                PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer, uiState = uiState)
+                PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer, uiState = uiState, onPlayPauseClick = onPlayPauseClick)
             }
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -306,7 +311,8 @@ private fun PlayerContentTableTopBottom(
     uiState: PlayerUiState,
     onBackPress: () -> Unit,
     modifier: Modifier = Modifier,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    onPlayPauseClick: () -> Unit
 ) {
     // Content for the table part of the screen
     Column(
@@ -334,7 +340,8 @@ private fun PlayerContentTableTopBottom(
                 playerButtonSize = 92.dp,
                 modifier = Modifier.padding(top = 8.dp),
                 mplayer = mplayer,
-                uiState = uiState
+                uiState = uiState,
+                onPlayPauseClick = onPlayPauseClick
             )
             PlayerSlider(uiState.duration)
         }
@@ -377,7 +384,8 @@ private fun PlayerContentBookStart(
 private fun PlayerContentBookEnd(
     uiState: PlayerUiState,
     modifier: Modifier = Modifier,
-    mplayer: MediaPlayer
+    mplayer: MediaPlayer,
+    onPlayPauseClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -393,7 +401,7 @@ private fun PlayerContentBookEnd(
                 .weight(1f)
         )
         PlayerSlider(uiState.duration)
-        PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer, uiState = uiState)
+        PlayerButtons(Modifier.padding(vertical = 8.dp), mplayer = mplayer, uiState = uiState, onPlayPauseClick = onPlayPauseClick)
     }
 }
 
@@ -578,6 +586,7 @@ fun PlayerButtonsPreview() {
 }
 */
 
+/*
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Preview(device = Devices.PHONE)
 @Preview(device = Devices.FOLDABLE)
@@ -606,4 +615,4 @@ fun PlayerScreenPreview() {
             )
         }
     }
-}
+}*/

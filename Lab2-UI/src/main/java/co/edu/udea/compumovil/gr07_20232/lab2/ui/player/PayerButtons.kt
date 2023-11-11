@@ -1,5 +1,7 @@
 package co.edu.udea.compumovil.gr07_20232.lab2.ui.player
 
+import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.widget.Toast
@@ -26,12 +28,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import co.edu.udea.compumovil.gr07_20232.lab2.R
 import co.edu.udea.compumovil.gr07_20232.lab2.ui.Song
 
@@ -40,21 +44,32 @@ private fun PlayButton(
     modifier: Modifier = Modifier,
     playerButtonSize: Dp = 72.dp,
     mplayer: MediaPlayer,
-    uiState: PlayerUiState
+    uiState: PlayerUiState,
+    onPlayPauseClick: () -> Unit
 ) {
     var isp by remember { mutableStateOf( if(Song.current.equals(uiState.uri)) mplayer.isPlaying else false ) }
     val icon = if (isp) Icons.Rounded.PauseCircleFilled else Icons.Rounded.PlayCircleFilled
+    val context = LocalContext.current
+
 
     fun handlePlayPause () {
-        if(Song.current.equals(uiState.uri)) {
+        if (Song.current.equals(uiState.uri)) {
             if (mplayer.isPlaying) {
                 mplayer.pause()
                 isp = false
+                Intent(context.applicationContext, MediaPlayerService::class.java).also {
+                    it.action = MediaPlayerService.Actions.STOP.toString()
+                    context.startService(it)
+                }
             } else {
                 mplayer.start()
                 isp = true
+                Intent(context.applicationContext, MediaPlayerService::class.java).also {
+                    it.action = MediaPlayerService.Actions.START.toString()
+                    context.startService(it)
+                }
             }
-        } else {
+        }else {
             Song.current = uiState.uri
             Song.refresh()
             Song.refresh = fun(){
@@ -66,12 +81,13 @@ private fun PlayButton(
             mplayer.prepareAsync()
             mplayer.setOnPreparedListener {
                     mediaPlayer -> run {
-                    mediaPlayer.start()
-                    isp = true
-                }
+                mediaPlayer.start()
+                isp = true
+            }
             }
         }
     }
+
 
     Image(
         imageVector = icon,
@@ -81,7 +97,9 @@ private fun PlayButton(
         modifier = modifier.size(playerButtonSize)
             .semantics { role = Role.Button }
             .then(
-                Modifier.clickable { handlePlayPause() }
+                Modifier.clickable {
+                    onPlayPauseClick().also { handlePlayPause() }
+                }
             )
     )
 }
@@ -92,7 +110,8 @@ public fun PlayerButtons(
     playerButtonSize: Dp = 72.dp,
     sideButtonSize: Dp = 48.dp,
     mplayer: MediaPlayer,
-    uiState: PlayerUiState
+    uiState: PlayerUiState,
+    onPlayPauseClick: () -> Unit
 ) {
 
 
@@ -119,7 +138,7 @@ public fun PlayerButtons(
             colorFilter = ColorFilter.tint(LocalContentColor.current),
             modifier = buttonsModifier
         )
-        PlayButton(mplayer = mplayer, uiState = uiState)
+        PlayButton(mplayer = mplayer, uiState = uiState, onPlayPauseClick = onPlayPauseClick)
         Image(
             imageVector = Icons.Filled.Forward30,
             contentDescription = stringResource(R.string.cd_forward30),
